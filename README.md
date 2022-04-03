@@ -1,1 +1,1 @@
-# shopping-mall-project
+# react-boiler-plate
