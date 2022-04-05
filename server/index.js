@@ -22,7 +22,7 @@ app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err });
+    if (err) return res.json({ success: false, err: "비밀번호가 틀립니다" });
 
     return res.status(200).json({ success: true });
   });
