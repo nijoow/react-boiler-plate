@@ -1,30 +1,28 @@
 import {
-  LOGIN_USER,
-  REGISTER_USER,
-  AUTH_USER,
-  IS_LOGIN_USER,
+  LOGIN_USER_FULFILLED,
+  REGISTER_USER_FULFILLED,
+  AUTH_USER_FULFILLED,
 } from "../_action/types";
 interface UserAction {
   type: String;
   payload: any;
 }
-
-export default function user_reducer(
-  state = { isLogin: false },
-  action: UserAction
-) {
+const initialState = {
+  loginSuccess: null,
+  register: null,
+  userData: { isAuth: false },
+};
+export default function user_reducer(state = initialState, action: UserAction) {
   switch (action.type) {
-    case LOGIN_USER:
+    case LOGIN_USER_FULFILLED:
       return {
         ...state,
         loginSuccess: action.payload,
       };
-    case REGISTER_USER:
+    case REGISTER_USER_FULFILLED:
       return { ...state, register: action.payload };
-    case AUTH_USER:
+    case AUTH_USER_FULFILLED:
       return { ...state, userData: action.payload };
-    case IS_LOGIN_USER:
-      return { ...state, isLogin: action.payload };
     default:
       return state;
   }

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../../_action/user_action";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../../_reducers";
 import Auth from "../../../hoc/auth";
 function RegisterPage() {
   const [name, setName] = useState("");
@@ -11,7 +12,9 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const loginSuccess = useSelector(
+    (state: RootState) => state.user_reducer.loginSuccess
+  );
   const onSubmitHandler = (event: any) => {
     event.preventDefault();
     if (name.length > 50) {
@@ -23,15 +26,12 @@ function RegisterPage() {
     if (password !== confirmPassword) {
       return alert("비밀번호와 비밀번호 확인은 같아야 합니다");
     }
-    dispatch(
-      registerUser({ name: name, email: email, password: password })
-    ).payload.then((response: any) => {
-      if (response.success) {
-        navigate("/login");
-      } else {
-        alert("Error");
-      }
-    });
+    dispatch(registerUser({ name: name, email: email, password: password }));
+    if (loginSuccess.loginSuccess) {
+      navigate("/login");
+    } else {
+      alert("Error");
+    }
   };
   return (
     <div className="min-h-screen  flex items-center justify-center  px-4 sm:px-6 lg:px-8">

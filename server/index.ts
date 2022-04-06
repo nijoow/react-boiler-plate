@@ -1,4 +1,5 @@
-// const express = require("express");
+// //const express = require("express");
+// import express, { Request, Response } from "express";
 // const app = express();
 // const port = 5000;
 // const cookieParser = require("cookie-parser");
@@ -16,11 +17,8 @@
 //     useUnifiedTopology: true,
 //   })
 //   .then(() => console.log("MongoDB Connected..."))
-//   .catch((err) => console.log(err));
+//   .catch((error: any) => console.log(error));
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World~~!!!!");
-// });
 // app.post("/api/users/register", (req, res) => {
 //   const user = new User(req.body);
 

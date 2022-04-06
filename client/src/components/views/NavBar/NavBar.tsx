@@ -1,18 +1,14 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { isLogin } from "../../../_action/user_action";
 import { RootState } from "../../../_reducers";
 function NavBar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const _isLogin = useSelector(
-    (state: RootState) => state.user_reducer.isLogin
+  const userData = useSelector(
+    (state: RootState) => state.user_reducer.userData
   );
   const onClickHandler = () => {
     axios.get(`/api/users/logout`).then((response) => {
-      dispatch(isLogin(false));
       if (response.data.success) navigate("/login");
     });
   };
@@ -27,7 +23,7 @@ function NavBar() {
           <li>Category2</li>
         </ul>
         <ul className="flex-[1_1_0] flex space-x-10 px-10">
-          {!_isLogin ? (
+          {!userData.isAuth ? (
             <>
               <Link to="/login">
                 <li>Login</li>

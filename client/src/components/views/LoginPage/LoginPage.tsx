@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, isLogin } from "../../../_action/user_action";
+import { loginUser } from "../../../_action/user_action";
 import Auth from "../../../hoc/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { RootState } from "../../../_reducers";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const loginSuccess = useSelector(
+    (state: RootState) => state.user_reducer.loginSuccess
+  );
   const onSubmitHandler = async (event: any) => {
     event.preventDefault();
-    await dispatch(
-      loginUser({ email: email, password: password })
-    ).payload.then((response: any) => {
-      if (response.loginSuccess) {
-        dispatch(isLogin(true));
-        navigate("/");
-      } else {
-        alert("Error");
-      }
-    });
+    dispatch(loginUser({ email: email, password: password }));
+    // if (loginSuccess.loginSuccess) {
+    //   navigate("/");
+    // } else {
+    //   alert("Error");
+    // }
   };
+
   return (
     <div className="min-h-screen  flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -120,6 +120,13 @@ function LoginPage() {
               </span>
               Sign in
             </button>
+            <div className="text-sm py-2">
+              <Link to="/register">
+                <a className="font-medium text-indigo-700 hover:text-indigo-500">
+                  Or Create Account now?
+                </a>
+              </Link>
+            </div>
           </div>
         </form>
       </div>
